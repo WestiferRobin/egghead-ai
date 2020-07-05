@@ -1,0 +1,11 @@
+/Users/wesitferrobin/Projects/workspace/Egghead-Framework/Csharp-FrameW/bin/Debug/netcoreapp3.0/Csharp-FrameW
+/Users/wesitferrobin/Projects/workspace/Egghead-Framework/Csharp-FrameW/bin/Debug/netcoreapp3.0/Csharp-FrameW.deps.json
+/Users/wesitferrobin/Projects/workspace/Egghead-Framework/Csharp-FrameW/bin/Debug/netcoreapp3.0/Csharp-FrameW.runtimeconfig.json
+/Users/wesitferrobin/Projects/workspace/Egghead-Framework/Csharp-FrameW/bin/Debug/netcoreapp3.0/Csharp-FrameW.runtimeconfig.dev.json
+/Users/wesitferrobin/Projects/workspace/Egghead-Framework/Csharp-FrameW/bin/Debug/netcoreapp3.0/Csharp-FrameW.dll
+/Users/wesitferrobin/Projects/workspace/Egghead-Framework/Csharp-FrameW/bin/Debug/netcoreapp3.0/Csharp-FrameW.pdb
+/Users/wesitferrobin/Projects/workspace/Egghead-Framework/Csharp-FrameW/obj/Debug/netcoreapp3.0/Csharp-FrameW.csprojAssemblyReference.cache
+/Users/wesitferrobin/Projects/workspace/Egghead-Framework/Csharp-FrameW/obj/Debug/netcoreapp3.0/Csharp-FrameW.AssemblyInfoInputs.cache
+/Users/wesitferrobin/Projects/workspace/Egghead-Framework/Csharp-FrameW/obj/Debug/netcoreapp3.0/Csharp-FrameW.AssemblyInfo.cs
+/Users/wesitferrobin/Projects/workspace/Egghead-Framework/Csharp-FrameW/obj/Debug/netcoreapp3.0/Csharp-FrameW.dll
+/Users/wesitferrobin/Projects/workspace/Egghead-Framework/Csharp-FrameW/obj/Debug/netcoreapp3.0/Csharp-FrameW.pdb
