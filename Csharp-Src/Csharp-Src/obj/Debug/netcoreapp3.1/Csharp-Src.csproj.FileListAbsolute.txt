@@ -1,0 +1,13 @@
+D:\ProgramProjects\Egghead_AI\Csharp-Src\Csharp-Src\bin\Debug\netcoreapp3.1\Csharp-Src.exe
+D:\ProgramProjects\Egghead_AI\Csharp-Src\Csharp-Src\bin\Debug\netcoreapp3.1\Csharp-Src.deps.json
+D:\ProgramProjects\Egghead_AI\Csharp-Src\Csharp-Src\bin\Debug\netcoreapp3.1\Csharp-Src.runtimeconfig.json
+D:\ProgramProjects\Egghead_AI\Csharp-Src\Csharp-Src\bin\Debug\netcoreapp3.1\Csharp-Src.runtimeconfig.dev.json
+D:\ProgramProjects\Egghead_AI\Csharp-Src\Csharp-Src\bin\Debug\netcoreapp3.1\Csharp-Src.dll
+D:\ProgramProjects\Egghead_AI\Csharp-Src\Csharp-Src\bin\Debug\netcoreapp3.1\Csharp-Src.pdb
+D:\ProgramProjects\Egghead_AI\Csharp-Src\Csharp-Src\obj\Debug\netcoreapp3.1\Csharp-Src.AssemblyInfoInputs.cache
+D:\ProgramProjects\Egghead_AI\Csharp-Src\Csharp-Src\obj\Debug\netcoreapp3.1\Csharp-Src.AssemblyInfo.cs
+D:\ProgramProjects\Egghead_AI\Csharp-Src\Csharp-Src\obj\Debug\netcoreapp3.1\Csharp-Src.csproj.CoreCompileInputs.cache
+D:\ProgramProjects\Egghead_AI\Csharp-Src\Csharp-Src\obj\Debug\netcoreapp3.1\Csharp-Src.dll
+D:\ProgramProjects\Egghead_AI\Csharp-Src\Csharp-Src\obj\Debug\netcoreapp3.1\Csharp-Src.pdb
+D:\ProgramProjects\Egghead_AI\Csharp-Src\Csharp-Src\obj\Debug\netcoreapp3.1\Csharp-Src.genruntimeconfig.cache
+D:\ProgramProjects\Egghead_AI\Csharp-Src\Csharp-Src\obj\Debug\netcoreapp3.1\Csharp-Src.csprojAssemblyReference.cache

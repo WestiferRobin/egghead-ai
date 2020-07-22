@@ -19,6 +19,7 @@ class XorTron(Network):
         Network.__init__(self, learn_rate=0.1)
 
     def build_network(self):
+        print("Starting to build XOR Model")
         self.input_layer = [State(), State()]
         self.output_layer = [State()]
         

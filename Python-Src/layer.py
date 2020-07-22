@@ -11,9 +11,9 @@ class Layer:
         for node in self.nodes:
             node.calculate()
 
-    def backward(self, learn_rate):
+    def backward(self):
         for node in self.nodes:
-            node.derive(learn_rate)
+            node.derive(self.learn_rate)
 
     def add_node(self, node):
         self.nodes.append(node)

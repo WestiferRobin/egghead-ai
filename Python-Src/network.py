@@ -5,7 +5,7 @@ from node import Node
 
 class Network:
 
-    def __init__(self, learn_rate = 0.001, layers = []):
+    def __init__(self, learn_rate = 0.01, layers = []):
         self.learn_rate = learn_rate
         self.layers = layers
         self.input_layer = []
@@ -79,11 +79,9 @@ class Network:
             print("Error: expected and actual length isn\'t valid.")
             return
         constant = 1.0 / len(expected)
-        res = []
         for index in range(0, len(expected)):
             self.output_layer[index].pipe_line.backward_result = (-1.0 * constant * (expected[index] - self.output_layer[index].state_value))
         index_layer = len(self.layers) - 1
         while index_layer >= 0:
-            # print(self.layers[index_layer].to_string())
-            self.layers[index_layer].backward(self.learn_rate)
+            self.layers[index_layer].backward()
             index_layer -= 1
