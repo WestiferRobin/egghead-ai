@@ -33,17 +33,6 @@ namespace Csharp_Src
                         Console.WriteLine($"{string.Join(",", fff)} result is {a}");
                     }
                     break;
-                case 2:
-                    caseExample = new AutoEncoder();
-                    var fdsa = ((AutoEncoder)caseExample).AutoCases;
-                    caseExample.BuildNetwork();
-                    caseExample.TrainNetwork(1000000, fdsa);
-                    foreach (var fff in fdsa)
-                    {
-                        var b = caseExample.RunNormal(fff, true);
-                        Console.WriteLine($"[{string.Join(",", fff)}] result is [{string.Join(",", b)}]");
-                    }
-                    break;
             }
         }
     }

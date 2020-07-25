@@ -53,10 +53,12 @@ class NodeTron(Network):
 
 
 if __name__ == "__main__":
-    targ_cases = or_cases
-    the_network = NodeTron()
-    the_network.build_network()
-    the_network.train_network(1000000, targ_cases)
-    for case in targ_cases:
-        ans = the_network.run_normal([case[0], case[1]], return_raw=True)[0]
-        print(str(case) + ": " + str(ans))
+    mr_cases = [and_cases, or_cases]
+    for dat_case in mr_cases:
+        targ_cases = dat_case
+        the_network = NodeTron()
+        the_network.build_network()
+        the_network.train_network(1000000, targ_cases)
+        for case in targ_cases:
+            ans = the_network.run_normal([case[0], case[1]], return_raw=True)[0]
+            print(str(case) + ": " + str(ans))
