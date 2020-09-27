@@ -10,9 +10,9 @@ namespace Csharp_Src
         private string LayerName { get; }
         public List<Node> LayerNodes { get; }
 
-        public Layer(double learn_rate, string name = "")
+        public Layer(double learnRate, string name = "")
         {
-            this.LearningRate = learn_rate;
+            this.LearningRate = learnRate;
             this.LayerName = name;
             this.LayerNodes = new List<Node>();
         }

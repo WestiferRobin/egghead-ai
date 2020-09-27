@@ -1,5 +1,6 @@
 #include <iostream>
-#include "test_case.h"
+#include "egghead_comp.hpp"
+//#include "test_case.hpp"
 
 using namespace std;
 

@@ -68,11 +68,3 @@ if __name__ == "__main__":
     for case in xor_cases:
         ans = the_network.run_normal([case[0], case[1]], return_raw=True)
         print(str(case) + ": " + str(ans))
-    # times = 1
-    # while (times <= 3):
-    #     print("---------------------------")
-    #     print(f"iternation number {times}")
-    #     the_network.train_network(1, [1.0, 1.0, 0.0])
-    #     # ans = the_network.run_normal([1.0, 1.0], return_raw=True)
-    #     # print(str(ans))
-    #     times += 1

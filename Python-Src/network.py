@@ -5,7 +5,7 @@ from node import Node
 
 class Network:
 
-    def __init__(self, learn_rate = 0.01, layers = []):
+    def __init__(self, learn_rate = 0.01, layers = None):
         self.learn_rate = learn_rate
         self.layers = layers
         self.input_layer = []
@@ -60,8 +60,6 @@ class Network:
         self.__forward(inputs)
 
     def __forward(self, inputs):
-        if len(inputs) != len(self.input_layer):
-            print("Inputs don\'t aline with input states. Please check again.")
         for index in range(0, len(inputs)):
             self.input_layer[index].load_value(float(inputs[index]))
         for input_state in self.input_layer:
@@ -75,9 +73,6 @@ class Network:
         self.__backward(expected)
 
     def __backward(self, expected):
-        if len(expected) != len(self.output_layer):
-            print("Error: expected and actual length isn\'t valid.")
-            return
         constant = 1.0 / len(expected)
         for index in range(0, len(expected)):
             self.output_layer[index].pipe_line.backward_result = (-1.0 * constant * (expected[index] - self.output_layer[index].state_value))

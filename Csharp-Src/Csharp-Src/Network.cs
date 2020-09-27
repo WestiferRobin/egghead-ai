@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Csharp_Src
 {
@@ -38,7 +37,7 @@ namespace Csharp_Src
 
         public void ConnectStateToNode(State sourceState, Node targetNode)
         {
-            if (sourceState.PipeLine == null)
+            if (sourceState.Pipeline == null)
             {
                 Pipe pipeLine = new Pipe();
                 sourceState.AddPipeline(pipeLine);
@@ -46,13 +45,13 @@ namespace Csharp_Src
             }
             else
             {
-                targetNode.AddBackPipe(sourceState.PipeLine);
+                targetNode.AddBackPipe(sourceState.Pipeline);
             }
         }
 
         public void ConnectNodeToState(Node sourceNode, State targetState)
         {
-            if (targetState.PipeLine == null)
+            if (targetState.Pipeline == null)
             {
                 Pipe pipeLine = new Pipe();
                 sourceNode.AddFrontPipe(pipeLine);
@@ -60,7 +59,7 @@ namespace Csharp_Src
             }
             else
             {
-                sourceNode.AddFrontPipe(targetState.PipeLine);
+                sourceNode.AddFrontPipe(targetState.Pipeline);
             }
         }
 
@@ -97,11 +96,11 @@ namespace Csharp_Src
             for (int index = 0; index < inputs.Count; index++)
                 this.InputLayer[index].LoadValue(inputs[index]);
             foreach (var inputState in this.InputLayer)
-                inputState.PipeLine.ForwardResult = inputState.StateValue;
+                inputState.Pipeline.ForwardResult = inputState.StateValue;
             foreach (var layer in this.Layers)
                 layer.Forward();
             foreach (var outputState in this.OutputLayer)
-                outputState.LoadValue(outputState.PipeLine.ForwardResult);
+                outputState.LoadValue(outputState.Pipeline.ForwardResult);
         }
 
         public void RunBackward(List<double> expected)
@@ -116,7 +115,7 @@ namespace Csharp_Src
             
             double constant = 1.0 / expected.Count;
             for (int index = 0; index < expected.Count; index++)
-                this.OutputLayer[index].PipeLine.BackwardResult = (-1.0 * constant * (expected[index] - this.OutputLayer[index].StateValue));
+                this.OutputLayer[index].Pipeline.BackwardResult = (-1.0 * constant * (expected[index] - this.OutputLayer[index].StateValue));
             
             int indexLayer = this.Layers.Count - 1;
             while (indexLayer >= 0)

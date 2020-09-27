@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Csharp_Src
+﻿namespace Csharp_Src
 {
     public class Pipe
     {
