@@ -1,5 +1,4 @@
 import java.util.*;
-import java.lang.*;
 
 public class Layer
 {
@@ -7,9 +6,9 @@ public class Layer
     private String _layerName;
     private ArrayList<Node> _layerNodes;
 
-    public Layer(double learn_rate, String name)
+    public Layer(double learnRate, String name)
     {
-        this._learningRate = learn_rate;
+        this._learningRate = learnRate;
         this._layerName = name;
         this._layerNodes = new ArrayList<Node>();
     }

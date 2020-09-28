@@ -52,12 +52,12 @@ public class Network
 
     public void buildNetwork()
     {
-        System.out.print("asdf");
+        System.out.print("Please implement BuildNetwork in the child class.");
     }
 
     public void trainNetwork(int iterations, ArrayList<ArrayList<Double>> cases)
     {
-        System.out.print("asdf");
+        System.out.print("Please implement TrainNetwork in the child class.");
     }
 
     public void connectPipeline(Node sourceNode, Node targetNode)

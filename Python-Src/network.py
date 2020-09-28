@@ -7,7 +7,10 @@ class Network:
 
     def __init__(self, learn_rate = 0.01, layers = None):
         self.learn_rate = learn_rate
-        self.layers = layers
+        if layers == None:
+            self.layers = []
+        else:
+            self.layers = layers
         self.input_layer = []
         self.output_layer = []
 
