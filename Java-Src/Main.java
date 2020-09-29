@@ -4,7 +4,7 @@ public class Main
 {
     public static void main(String[] args) 
     {
-        int flag = 3;
+        int flag = 2;
         switch (flag)
         {
             case 1:

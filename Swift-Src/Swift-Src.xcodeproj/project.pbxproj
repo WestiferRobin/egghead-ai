@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		680782602523051E00D5A678 /* xor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6807825F2523051E00D5A678 /* xor.swift */; };
+		680782632523053A00D5A678 /* nodetron.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680782622523053A00D5A678 /* nodetron.swift */; };
 		68520086251C2D2B00C99639 /* node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68520085251C2D2B00C99639 /* node.swift */; };
 		68520089251C2FD800C99639 /* state.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68520088251C2FD800C99639 /* state.swift */; };
 		6852008C251C2FE900C99639 /* pipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6852008B251C2FE900C99639 /* pipe.swift */; };
@@ -28,6 +30,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6807825F2523051E00D5A678 /* xor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xor.swift; sourceTree = "<group>"; };
+		680782622523053A00D5A678 /* nodetron.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nodetron.swift; sourceTree = "<group>"; };
 		68520085251C2D2B00C99639 /* node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = node.swift; sourceTree = "<group>"; };
 		68520088251C2FD800C99639 /* state.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = state.swift; sourceTree = "<group>"; };
 		6852008B251C2FE900C99639 /* pipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pipe.swift; sourceTree = "<group>"; };
@@ -73,6 +77,8 @@
 				6852008B251C2FE900C99639 /* pipe.swift */,
 				6852008E251C32AA00C99639 /* network.swift */,
 				68520091251D8B7800C99639 /* layer.swift */,
+				6807825F2523051E00D5A678 /* xor.swift */,
+				680782622523053A00D5A678 /* nodetron.swift */,
 			);
 			path = "Swift-Src";
 			sourceTree = "<group>";
@@ -136,10 +142,12 @@
 			files = (
 				689E2C7C251C0DA400525FC8 /* main.swift in Sources */,
 				68520086251C2D2B00C99639 /* node.swift in Sources */,
+				680782632523053A00D5A678 /* nodetron.swift in Sources */,
 				6852008F251C32AA00C99639 /* network.swift in Sources */,
 				68520092251D8B7800C99639 /* layer.swift in Sources */,
 				68520089251C2FD800C99639 /* state.swift in Sources */,
 				6852008C251C2FE900C99639 /* pipe.swift in Sources */,
+				680782602523051E00D5A678 /* xor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

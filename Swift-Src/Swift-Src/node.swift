@@ -51,7 +51,7 @@ class Node
         self._activeFlag = newActiveFlag;
         self._weights = [Double]();
         self._basis = isRandom ? Double.random(in: 0...1) : 0.5;
-        for _ in 0...size
+        for _ in 0..<size
         {
             let element = isRandom ? Double.random(in: 0...1) : 0.5;
             self._weights.append(element);
@@ -73,10 +73,11 @@ class Node
         
         outterDer *= paramDer;
         
-        for index in 0...weights.count
+        for index in 0..<weights.count
         {
             let innerDer = self.backPipes[index].forwardResult;
-            self.weights[index] = (Double)(learningRate * outterDer * innerDer);
+            self.weights[index] -= (Double)(learningRate * outterDer * innerDer);
+            self.backPipes[index].backwardResult = outterDer * self.weights[index];
         }
         self.basis -= (learningRate * outterDer);
     }
@@ -86,14 +87,14 @@ class Node
         let tValue = self.calculateT();
         for pipe in self.frontPipes
         {
-            pipe.forwardResult += self.active(paramValue: tValue);
+            pipe.forwardResult = self.active(paramValue: tValue);
         }
     }
     
     private func calculateT() -> Double
     {
         var ans = self.basis;
-        for index in 0...self.weights.count
+        for index in 0..<self.weights.count
         {
             ans += backPipes[index].forwardResult * weights[index];
         }

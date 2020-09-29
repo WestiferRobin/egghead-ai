@@ -16,8 +16,8 @@ class Network
         set { self._learningRate = newValue; }
     }
     
-    private var _layers:[Layer]?;
-    var layers:[Layer]? {
+    private var _layers:[Layer];
+    var layers:[Layer] {
         get { return self._layers; }
         set { self._layers = newValue; }
     }
@@ -34,7 +34,7 @@ class Network
         set { self._outputLayer = newValue; }
     }
     
-    init(newLayers:[Layer]?, newLearningRate:Double = 0.01)
+    init(newLayers:[Layer] = [Layer](), newLearningRate:Double = 0.01)
     {
         self._learningRate = newLearningRate;
         self._layers = newLayers;
@@ -114,7 +114,7 @@ class Network
     
     private func foward(newInputs:[Double])
     {
-        for index in 0...newInputs.count
+        for index in 0..<newInputs.count
         {
             self.inputLayer![index].loadValue(stateValue: newInputs[index]);
         }
@@ -122,7 +122,7 @@ class Network
         {
             state.pipeline?.forwardResult = state.stateValue;
         }
-        for layer in self.layers!
+        for layer in self.layers
         {
             layer.forward();
         }
@@ -140,16 +140,16 @@ class Network
     private func backward(newExpected:[Double])
     {
         let constant:Double = 1.0 / Double(newExpected.count);
-        for index in 0...newExpected.count
+        for index in 0..<newExpected.count
         {
             let paramValue:Double = (-1.0 * constant * (newExpected[index] - self.outputLayer![index].stateValue));
             self.outputLayer?[index].pipeline?.backwardResult = paramValue;
         }
         
-        var indexLayer:Int = self.layers!.count - 1;
+        var indexLayer:Int = self.layers.count - 1;
         while (indexLayer >= 0)
         {
-            self.layers![indexLayer].backward();
+            self.layers[indexLayer].backward();
             indexLayer -= 1;
         }
     }
