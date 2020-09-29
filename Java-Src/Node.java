@@ -9,11 +9,11 @@ public class Node
     private ArrayList<Pipe> _frontPipes;
     private ArrayList<Pipe> _backPipes;
 
-    public Node(int size, int active_flag, String name, boolean isRandom)
+    public Node(int size, int activeFlag, String name, boolean isRandom)
     {
         Random rand = new Random();
         this._nodeName = name;
-        this._activeFlag = active_flag;
+        this._activeFlag = activeFlag;
         this._weights = new ArrayList<Double>();
         this._basis = isRandom ? rand.nextDouble() : 0.5;
         for (int i = 0; i < size; i++)
@@ -83,16 +83,14 @@ public class Node
 
         outterDer *= paramDer;
 
-        ArrayList<Double> instWeights = this.getWeights();
-        ArrayList<Pipe> instBackpipes = this.getBackPipes();
         for (int index = 0; index < this.getWeights().size(); index++)
         {
-            double innerDer = instBackpipes.get(index).getForwardResult();
-            instWeights.set(index, (double)(learningRate * outterDer * innerDer));
-            instBackpipes.get(index).setBackwardResult(outterDer * instWeights.get(index));
+            double innerDer = this.getBackPipes().get(index).getForwardResult();
+            double weightTemp = this.getWeights().get(index) - (learningRate * outterDer * innerDer);
+            this.getWeights().set(index, weightTemp);
+            this.getBackPipes().get(index).setBackwardResult(outterDer * this.getWeights().get(index));
         }
-        this.setBackPipes(instBackpipes);
-        this.setWeights(instWeights);
+
         this.setBasis(this.getBasis() - (learningRate * outterDer));
     }
 
@@ -106,11 +104,9 @@ public class Node
     private double calculateT()
     {
         double ans = this.getBasis();
-        ArrayList<Double> instWeights = this.getWeights();
-        ArrayList<Pipe> instBackpipes = this.getBackPipes();
-        for (int index = 0; index < instWeights.size(); index++)
+        for (int index = 0; index < this.getWeights().size(); index++)
         {
-            ans += instBackpipes.get(index).getForwardResult() * instWeights.get(index);
+            ans += this.getBackPipes().get(index).getForwardResult() * this.getWeights().get(index);
         }
         return ans;
     }
@@ -120,7 +116,7 @@ public class Node
         switch (this.getActiveFlag())
         {
             case 1:
-                return (double)(1.0 / (1.0 + Math.exp(-paramValue)));
+                return (1.0 / (1.0 + Math.exp(-paramValue)));
             default:
                 return 0.0;
         }

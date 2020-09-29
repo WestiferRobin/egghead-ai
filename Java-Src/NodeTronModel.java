@@ -2,16 +2,20 @@ import java.util.*;
 
 public class NodeTronModel extends Network
 {
-    public static ArrayList<ArrayList<Double>> nodeCases = new ArrayList<ArrayList<Double>>();
+    public ArrayList<ArrayList<Double>> nodeCases = new ArrayList<ArrayList<Double>>();
 
     public NodeTronModel(double learningRate, ArrayList<Layer> layers, boolean isAnd)
     {
         super(learningRate, layers);
 
         if (isAnd)
+        {
             initAndCases();
+        }
         else
+        {
             initOrCases();
+        }
     }
 
     private void initAndCases()
@@ -33,6 +37,7 @@ public class NodeTronModel extends Network
     @Override
     public void buildNetwork()
     {
+        System.out.println("Starting to build NodeTronModel");
         Node mainNode = new Node(2, 1, "mainNode", true);
         Layer hiddenLayer = new Layer(this.getLearningRate(), "hiddenlayer1");
         ArrayList<State> inputLayer = new ArrayList<State>();
@@ -56,6 +61,8 @@ public class NodeTronModel extends Network
 
         this.setOutputLayer(outputLayer);
         this.setInputLayer(inputLayer);
+
+        System.out.println("Finished building NodeTronModel");
     }
 
     @Override
