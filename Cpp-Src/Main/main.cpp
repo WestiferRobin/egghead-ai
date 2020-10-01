@@ -4,7 +4,7 @@
 
 using namespace std;
 
-const int TRAIN_TIMES = 100000;
+const int TRAIN_TIMES = 1000000;
 
 void runPostTron(bool flag)
 {

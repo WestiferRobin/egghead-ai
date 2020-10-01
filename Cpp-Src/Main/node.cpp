@@ -5,7 +5,7 @@ double Node::calculateT()
     double ans = *this->basis;
     for (int index = 0; index < this->weights->size(); index++)
     {
-        ans += *this->backPipes->at(index)->forwardResult * this->weights->at(index);
+        ans += *this->backPipes->at(index)->getForwardResult() * this->weights->at(index);
     }
     return ans;
 }
@@ -65,15 +65,15 @@ void Node::derive(double learningRate)
     double paramDer = 0.0;
 
     for (int index = 0; index < this->frontPipes->size(); index++)
-        paramDer += *this->frontPipes->at(index)->backwardResult;
+        paramDer += *this->frontPipes->at(index)->getBackwardResult();
 
     outterDer *= paramDer;
 
     for (int index = 0; index < this->weights->size(); index++)
     {
-        double innerDer = *this->backPipes->at(index)->forwardResult;
+        double innerDer = *this->backPipes->at(index)->getForwardResult();
         this->weights->at(index) -= (double)(learningRate * outterDer * innerDer);
-        *this->backPipes->at(index)->backwardResult = (outterDer * (this->weights->at(index)));
+        this->backPipes->at(index)->setBackwardResult(outterDer * (this->weights->at(index)));
     }
 
     *this->basis -= (learningRate * outterDer);
@@ -83,7 +83,7 @@ void Node::calculate()
 {
     double tValue = this->calculateT();
     for (int index = 0; index < this->frontPipes->size(); index++)
-        *this->frontPipes->at(index)->forwardResult = this->active(tValue);
+        this->frontPipes->at(index)->setForwardResult(this->active(tValue));
 }
 
 string Node::toString()

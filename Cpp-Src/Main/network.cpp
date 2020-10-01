@@ -3,13 +3,13 @@
 void Network::forward(vector<double> inputs)
 {
     for (int index = 0; index < inputs.size(); index++)
-        *this->inputLayer->at(index)->stateValue = inputs[index];
+        this->inputLayer->at(index)->setStateValue(inputs[index]);
     for (int index = 0; index < this->inputLayer->size(); index++)
-        this->inputLayer->at(index)->pipeLine->forwardResult = this->inputLayer->at(index)->stateValue;
+        this->inputLayer->at(index)->getPipeline()->setForwardResult(*this->inputLayer->at(index)->getStateValue());
     for (int index = 0; index < this->layers->size(); index++)
         this->layers->at(index)->forward();
     for (int index = 0; index < this->outputLayer->size(); index++)
-        this->outputLayer->at(index)->stateValue = this->outputLayer->at(index)->pipeLine->forwardResult;
+        this->outputLayer->at(index)->setStateValue(*this->outputLayer->at(index)->getPipeline()->getForwardResult());
 }
 
 void Network::backward(vector<double> expected)
@@ -17,8 +17,8 @@ void Network::backward(vector<double> expected)
     double constant = 1.0 / expected.size();
     for (int index = 0; index < expected.size(); index++)
     {
-        double paramValue = (-1.0 * constant * (expected[index] - *this->outputLayer->at(index)->stateValue));
-        *this->outputLayer->at(index)->pipeLine->backwardResult = paramValue;
+        double paramValue = (-1.0 * constant * (expected[index] - *this->outputLayer->at(index)->getStateValue()));
+        this->outputLayer->at(index)->getPipeline()->setBackwardResult(paramValue);
     }
     
     int indexLayer = this->layers->size() - 1;
@@ -57,35 +57,35 @@ void Network::trainNetwork(int iterations, vector<vector<double>*>* cases)
 void Network::connectPipeline(Node * sourceNode, Node * targetNode)
 {
     Pipe * pipeline = new Pipe();
-    sourceNode->frontPipes->push_back(pipeline);
-    targetNode->backPipes->push_back(pipeline);
+    sourceNode->getFrontPipes()->push_back(pipeline);
+    targetNode->getBackPipes()->push_back(pipeline);
 }
 
 void Network::connectStateToNode(State * sourceState, Node * targetNode)
 {
-    if (sourceState->pipeLine == nullptr)
+    if (sourceState->getPipeline() == nullptr)
     {
         Pipe * pipeline = new Pipe();
-        sourceState->pipeLine = pipeline;
-        targetNode->backPipes->push_back(pipeline);
+        sourceState->setPipeline(pipeline);
+        targetNode->getBackPipes()->push_back(pipeline);
     }
     else
     {
-        targetNode->backPipes->push_back(sourceState->pipeLine);
+        targetNode->getBackPipes()->push_back(sourceState->getPipeline());
     }
 }
 
 void Network::connectNodeToState(Node* sourceNode, State * targetState)
 {
-    if (targetState->pipeLine == nullptr)
+    if (targetState->getPipeline() == nullptr)
     {
         Pipe* pipeline = new Pipe();
-        sourceNode->frontPipes->push_back(pipeline);
-        targetState->pipeLine = pipeline;
+        sourceNode->getFrontPipes()->push_back(pipeline);
+        targetState->setPipeline(pipeline);
     }
     else
     {
-        sourceNode->frontPipes->push_back(targetState->pipeLine);
+        sourceNode->getFrontPipes()->push_back(targetState->getPipeline());
     }
 }
 
@@ -98,11 +98,11 @@ vector<double> Network::runNormal(vector<double> inputs, bool returnRaw)
     {
         if (returnRaw)
         {
-            ans.push_back(*this->outputLayer->at(index)->stateValue);
+            ans.push_back(*this->outputLayer->at(index)->getStateValue());
         }
         else
         {
-            ans.push_back(0.5 <= *this->outputLayer->at(index)->stateValue ? 1.0 : 0.0);
+            ans.push_back(0.5 <= *this->outputLayer->at(index)->getStateValue() ? 1.0 : 0.0);
         }
     }
 
@@ -118,4 +118,3 @@ void Network::runBackward(vector<double> expected)
 {
     this->backward(expected);
 }
-

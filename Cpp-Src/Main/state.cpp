@@ -3,11 +3,11 @@
 State::State()
 {
     stateValue = new double(0.0);
-    pipeLine = nullptr;
+    pipeline = nullptr;
 }
 
 State::~State()
 {
     delete stateValue;
-    delete pipeLine;
+    delete pipeline;
 }
