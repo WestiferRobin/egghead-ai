@@ -7,7 +7,7 @@ namespace Csharp_Src
     public class Layer
     {
         public double LearningRate { get; }
-        private string LayerName { get; }
+        public string LayerName { get; }
         public List<Node> LayerNodes { get; }
 
         public Layer(double learnRate, string name = "")

@@ -15,37 +15,37 @@ public class Network
         this._outputLayer = null;
     }
 
-    protected double getLearningRate() 
+    public double getLearningRate() 
     {
         return this._learningRate;
     }
 
-    protected ArrayList<Layer> getLayers() 
+    public ArrayList<Layer> getLayers() 
     {
         return this._layers;
     }
 
-    protected void setLayers(ArrayList<Layer> value) 
+    public void setLayers(ArrayList<Layer> value) 
     {
         this._layers = value;
     }
 
-    protected ArrayList<State> getInputLayer() 
+    public ArrayList<State> getInputLayer() 
     {
          return this._inputLayer; 
     }
 
-    protected void setInputLayer(ArrayList<State> value) 
+    public void setInputLayer(ArrayList<State> value) 
     {
         this._inputLayer = value;
     }
 
-    protected ArrayList<State> getOutputLayer() 
+    public ArrayList<State> getOutputLayer() 
     {
         return this._outputLayer;
     }
 
-    protected void setOutputLayer(ArrayList<State> value) 
+    public void setOutputLayer(ArrayList<State> value) 
     {
         this._outputLayer = value;
     }

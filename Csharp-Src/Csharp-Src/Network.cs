@@ -5,10 +5,10 @@ namespace Csharp_Src
 {
     public class Network
     {
-        protected double LearningRate { get; }
-        protected List<Layer> Layers { get; set; }
-        protected List<State> InputLayer { get; set; }
-        protected List<State> OutputLayer { get; set; }
+        public double LearningRate { get; }
+        public List<Layer> Layers { get; set; }
+        public List<State> InputLayer { get; set; }
+        public List<State> OutputLayer { get; set; }
 
         public Network(double learningRate = 0.01, List<Layer> layers = null)
         {

@@ -5,12 +5,12 @@ namespace Csharp_Src
 {
     public class Node
     {
-        public string NodeName { get; }
-        private int ActiveFlag { get; }
-        private List<double> Weights { get; set; }
-        private double Basis { get; set; }
-        private List<Pipe> FrontPipes { get;}
-        private List<Pipe> BackPipes { get; }
+        public string NodeName { get; set; }
+        public int ActiveFlag { get; set; }
+        public List<double> Weights { get; set; }
+        public double Basis { get; set; }
+        public List<Pipe> FrontPipes { get; set; }
+        public List<Pipe> BackPipes { get; set; }
 
         public Node(int size, int active_flag=1, string name="", bool isRandom = true)
         {
