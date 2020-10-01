@@ -2,9 +2,9 @@
 
 Layer::Layer(double learn_rate, string name)
 {
-    learningRate = &learn_rate;
-    layerName = &name;
-    layerNodes = new vector<Node>();
+    learningRate = new double(learn_rate);
+    layerName = new string(name);
+    layerNodes = new vector<Node*>();
 }
 
 Layer::~Layer()
@@ -16,37 +16,18 @@ Layer::~Layer()
 
 void Layer::forward()
 {
-    for (int index = 0; index < this->getLayerNodes().size(); index++)
-        this->getLayerNodes()[index].calculate();
+    for (int index = 0; index < this->layerNodes->size(); index++)
+        this->layerNodes->at(index)->calculate();
 }
 
 void Layer::backward()
 {
-    for (int index = 0; index < this->getLayerNodes().size(); index++)
-        this->getLayerNodes()[index].derive(this->getLearningRate());
+    for (int index = 0; index < this->layerNodes->size(); index++)
+        this->layerNodes->at(index)->derive(*this->learningRate);
 }
 
-void Layer::addNode(Node targetNode)
-{
-    getLayerNodes().push_back(targetNode);
-}
 
 string Layer::toString()
 {
-    return getLayerName();
-}
-
-double Layer::getLearningRate()
-{
-    return *learningRate;
-}
-
-string Layer::getLayerName()
-{
-    return *layerName;
-}
-
-vector<Node> Layer::getLayerNodes()
-{
-    return *layerNodes;
+    return *this->layerName;
 }

@@ -11,23 +11,3 @@ Pipe::~Pipe()
     delete forwardResult;
     delete backwardResult;
 }
-
-double Pipe::getForwardResult()
-{
-    return *forwardResult;
-}
-
-void Pipe::setForwardResult(double newForwardResult)
-{
-    forwardResult = &newForwardResult;
-}
-
-double Pipe::getBackwardResult()
-{
-    return *backwardResult;
-}
-
-void Pipe::setBackwardResult(double newBackwardResult)
-{
-    backwardResult = &newBackwardResult;
-}

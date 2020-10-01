@@ -2,21 +2,17 @@
 
 double Node::calculateT()
 {
-    double ans = this->getBasis();
-    vector<double> instWeightes = this->getWeights();
-    vector<Pipe> instBackPipes = this->getBackPipes();
-    for (int index = 0; index < instWeightes.size(); index++)
+    double ans = *this->basis;
+    for (int index = 0; index < this->weights->size(); index++)
     {
-        ans += instBackPipes[index].getForwardResult() * instWeightes[index];
+        ans += *this->backPipes->at(index)->forwardResult * this->weights->at(index);
     }
-    this->setWeights(instWeightes);
-    this->setBackPipes(instBackPipes);
     return ans;
 }
 
 double Node::active(double paramValue)
 {
-    switch (this->getActiveFlag())
+    switch (*this->activeFlag)
     {
         case 1:
             return (double)(1.0 / (1.0 + exp(-paramValue)));
@@ -26,7 +22,7 @@ double Node::active(double paramValue)
 
 double Node::deriveActive(double paramValue)
 {
-    switch (this->getActiveFlag())
+    switch (*this->activeFlag)
     {
         case 1:
             double activeResult = this->active(paramValue);
@@ -38,17 +34,18 @@ double Node::deriveActive(double paramValue)
 
 Node::Node(int size, int newActiveFlag, string name, bool isRandom)
 {
-    nodeName = &name;
-    activeFlag = &newActiveFlag;
-    basis = new double(0.5);    // do random shit
+    nodeName = new string(name);
+    activeFlag = new int(newActiveFlag);
+    basis = new double(isRandom ? (double)rand() / RAND_MAX : 0.5);    // do random shit
     weights = new vector<double>();
     for (int i = 0; i < size; i++)
     {
-        double weight = 0.5; // do random shit
+        double weight = isRandom ? (double)rand() / RAND_MAX : 0.5; // do random shit
+        weights->push_back(weight);
 
     }
-    frontPipes = new vector<Pipe>();
-    backPipes = new vector<Pipe>();
+    frontPipes = new vector<Pipe*>();
+    backPipes = new vector<Pipe*>();
 }
 
 Node::~Node()
@@ -67,103 +64,33 @@ void Node::derive(double learningRate)
     double outterDer = this->deriveActive(tValue);
     double paramDer = 0.0;
 
-    vector<Pipe> instFrontPipes = this->getFrontPipes();
-    for (int index = 0; index < instFrontPipes.size(); index++)
-        paramDer +=  instFrontPipes[index].getBackwardResult();
+    for (int index = 0; index < this->frontPipes->size(); index++)
+        paramDer += *this->frontPipes->at(index)->backwardResult;
 
     outterDer *= paramDer;
 
-    vector<double> instWeights = this->getWeights();
-    vector<Pipe> instBackPipes = this->getBackPipes();
-    for (int index = 0; index < instWeights.size(); index++)
+    for (int index = 0; index < this->weights->size(); index++)
     {
-        double innerDer = instBackPipes[index].getForwardResult();
-        instWeights[index] = (double)(learningRate * outterDer * innerDer);
-        instBackPipes[index].setBackwardResult(outterDer * instWeights[index]);
+        double innerDer = *this->backPipes->at(index)->forwardResult;
+        this->weights->at(index) -= (double)(learningRate * outterDer * innerDer);
+        *this->backPipes->at(index)->backwardResult = (outterDer * (this->weights->at(index)));
     }
-    this->setWeights(instWeights);
-    this->setBackPipes(instBackPipes);
-    this->setBasis(this->getBasis() - (learningRate * outterDer));
+
+    *this->basis -= (learningRate * outterDer);
 }
 
 void Node::calculate()
 {
     double tValue = this->calculateT();
-    vector<Pipe> instFrontPipes = this->getFrontPipes();
-    for (int index = 0; index < instFrontPipes.size(); index++)
-        instFrontPipes[index].setForwardResult(this->active(tValue));
-    this->setFrontPipes(instFrontPipes);
-}
-
-void Node::addFrontPipe(Pipe pipe)
-{
-    this->getFrontPipes().push_back(pipe);
-}
-
-void Node::addBackPipe(Pipe pipe)
-{
-    this->getBackPipes().push_back(pipe);
+    for (int index = 0; index < this->frontPipes->size(); index++)
+        *this->frontPipes->at(index)->forwardResult = this->active(tValue);
 }
 
 string Node::toString()
 {
-    string ans = "Node : " + this->getNodeName() + " \n";
+    string ans = "Node : " + *this->nodeName + " \n";
     // ans += "weights: " + this->getWeights() + " \n";
     // ans += "basis: " + this->getBasis();
 
     return ans;
-}
-
-string Node::getNodeName()
-{
-    return *nodeName;
-}
-
-int Node::getActiveFlag()
-{
-    return *activeFlag;
-}
-
-vector<double> Node::getWeights()
-{
-    return *weights;
-}
-
-void Node::setWeights(vector<double> value)
-{
-    delete weights;
-    weights = &value;
-}
-
-double Node::getBasis()
-{
-    return *basis;
-}
-
-void Node::setBasis(double value)
-{
-    delete basis;
-    basis = &value;
-}
-
-vector<Pipe> Node::getFrontPipes()
-{
-    return *frontPipes;
-}
-
-void Node::setFrontPipes(vector<Pipe> newPipes)
-{
-    delete frontPipes;
-    frontPipes = &newPipes;
-}
-
-vector<Pipe> Node::getBackPipes()
-{
-    return *backPipes;
-}
-
-void Node::setBackPipes(vector<Pipe> newPipes)
-{
-    delete backPipes;
-    backPipes = &newPipes;
 }

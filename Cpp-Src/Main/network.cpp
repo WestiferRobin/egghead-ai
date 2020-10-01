@@ -3,13 +3,13 @@
 void Network::forward(vector<double> inputs)
 {
     for (int index = 0; index < inputs.size(); index++)
-        this->getInputLayer()[index].loadValue(inputs[index]);
-    for (int index = 0; index < this->getInputLayer().size(); index++)
-        this->getInputLayer()[index].getPipeline().setForwardResult(this->getInputLayer()[index].getStateValue());
-    for (int index = 0; index < this->getLayers().size(); index++)
-        this->getLayers()[index].forward();
-    for (int index = 0; index < this->getOutputLayer().size(); index++)
-        this->getOutputLayer()[index].loadValue(this->getOutputLayer()[index].getPipeline().getForwardResult());
+        *this->inputLayer->at(index)->stateValue = inputs[index];
+    for (int index = 0; index < this->inputLayer->size(); index++)
+        this->inputLayer->at(index)->pipeLine->forwardResult = this->inputLayer->at(index)->stateValue;
+    for (int index = 0; index < this->layers->size(); index++)
+        this->layers->at(index)->forward();
+    for (int index = 0; index < this->outputLayer->size(); index++)
+        this->outputLayer->at(index)->stateValue = this->outputLayer->at(index)->pipeLine->forwardResult;
 }
 
 void Network::backward(vector<double> expected)
@@ -17,59 +17,21 @@ void Network::backward(vector<double> expected)
     double constant = 1.0 / expected.size();
     for (int index = 0; index < expected.size(); index++)
     {
-        double paramValue = (-1.0 * constant * (expected[index] - this->getOutputLayer()[index].getStateValue()));
-        this->getOutputLayer()[index].getPipeline().setBackwardResult(paramValue);
+        double paramValue = (-1.0 * constant * (expected[index] - *this->outputLayer->at(index)->stateValue));
+        *this->outputLayer->at(index)->pipeLine->backwardResult = paramValue;
     }
     
-    int indexLayer = this->getLayers().size() - 1;
+    int indexLayer = this->layers->size() - 1;
     while (indexLayer >= 0)
     {
-        this->getLayers()[indexLayer--].backward();
+        this->layers->at(indexLayer--)->backward();
     }
 }
 
-double Network::getLearningRate()
+Network::Network(double newLearningRate)
 {
-    return *learningRate;
-}
-
-vector<Layer> Network::getLayers()
-{
-    return *layers;
-}
-
-void Network::setLayers(vector<Layer> newLayers)
-{
-    delete layers;
-    layers = &newLayers;
-}
-
-vector<State> Network::getInputLayer()
-{
-    return *inputLayer;
-}
-
-void Network::setInputLayer(vector<State> newLayer)
-{
-    delete inputLayer;
-    inputLayer = &newLayer;
-}
-
-vector<State> Network::getOutputLayer()
-{
-    return *outputLayer;
-}
-
-void Network::setOutputLayer(vector<State> newLayer)
-{
-    delete outputLayer;
-    outputLayer = &newLayer;
-}
-
-Network::Network(double newLearningRate, vector<Layer> newLayers)
-{
-    learningRate = &newLearningRate;
-    layers = &newLayers;
+    learningRate = new double(newLearningRate);
+    layers = new vector<Layer *>();
     inputLayer = nullptr;
     outputLayer = nullptr;
 }
@@ -87,47 +49,43 @@ void Network::buildNetwork()
     cout << "Please implement BuildNetwork in the child class." << endl;
 }
 
-void Network::trainNetwork(int, vector<vector<double>>)
+void Network::trainNetwork(int iterations, vector<vector<double>*>* cases)
 {
     cout << "Please implement TrainNetwork in the child class." << endl;
 }
 
-void Network::connectPipeline(Node sourceNode, Node targetNode)
+void Network::connectPipeline(Node * sourceNode, Node * targetNode)
 {
-    Pipe pipeline;
-    sourceNode.addFrontPipe(pipeline);
-    targetNode.addBackPipe(pipeline);
+    Pipe * pipeline = new Pipe();
+    sourceNode->frontPipes->push_back(pipeline);
+    targetNode->backPipes->push_back(pipeline);
 }
 
-void Network::connectStateToNode(State sourceState, Node targetNode)
+void Network::connectStateToNode(State * sourceState, Node * targetNode)
 {
-    // fix this bullshit
-    Pipe checker = sourceState.getPipeline();
-    if (&checker == NULL)
+    if (sourceState->pipeLine == nullptr)
     {
-        Pipe pipeline;
-        sourceState.addPipeline(pipeline);
-        targetNode.addBackPipe(pipeline);
+        Pipe * pipeline = new Pipe();
+        sourceState->pipeLine = pipeline;
+        targetNode->backPipes->push_back(pipeline);
     }
     else
     {
-        targetNode.addBackPipe(sourceState.getPipeline());
+        targetNode->backPipes->push_back(sourceState->pipeLine);
     }
 }
 
-void Network::connectNodeToState(Node sourceNode, State targetState)
+void Network::connectNodeToState(Node* sourceNode, State * targetState)
 {
-    // fix this bullshit
-    Pipe checker = targetState.getPipeline();
-    if (&checker == NULL)
+    if (targetState->pipeLine == nullptr)
     {
-        Pipe pipeline;
-        sourceNode.addFrontPipe(pipeline);
-        targetState.addPipeline(pipeline);
+        Pipe* pipeline = new Pipe();
+        sourceNode->frontPipes->push_back(pipeline);
+        targetState->pipeLine = pipeline;
     }
     else
     {
-        sourceNode.addFrontPipe(targetState.getPipeline());
+        sourceNode->frontPipes->push_back(targetState->pipeLine);
     }
 }
 
@@ -136,15 +94,15 @@ vector<double> Network::runNormal(vector<double> inputs, bool returnRaw)
     this->forward(inputs);
     vector<double> ans;
 
-    for (State outputState : this->getOutputLayer())
+    for (int index = 0; index < this->outputLayer->size(); index++)
     {
         if (returnRaw)
         {
-            ans.push_back(outputState.getStateValue());
+            ans.push_back(*this->outputLayer->at(index)->stateValue);
         }
         else
         {
-            ans.push_back(0.5 <= outputState.getStateValue() ? 1.0 : 0.0);
+            ans.push_back(0.5 <= *this->outputLayer->at(index)->stateValue ? 1.0 : 0.0);
         }
     }
 

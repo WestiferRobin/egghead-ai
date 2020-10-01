@@ -11,25 +11,3 @@ State::~State()
     delete stateValue;
     delete pipeLine;
 }
-
-double State::getStateValue()
-{
-    return *stateValue;
-}
-
-Pipe State::getPipeline()
-{
-    return *pipeLine;
-}
-
-void State::loadValue(double newValue)
-{
-    delete stateValue;
-    stateValue = &newValue;
-}
-
-void State::addPipeline(Pipe newPipeline)
-{
-    delete pipeLine;
-    pipeLine = &newPipeline;
-}

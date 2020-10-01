@@ -1,40 +1,78 @@
 #include <iostream>
-#include "egghead_comp.hpp"
-//#include "test_case.hpp"
+//#include "egghead_comp.hpp"
+#include "test_case.hpp"
 
 using namespace std;
 
-void buildNetwork()
+const int TRAIN_TIMES = 100000;
+
+void runPostTron(bool flag)
 {
-    /*Node mainNode = new Node(2, 1, "mainNode");
-    Layer hiddenLayer = new Layer(this.LearningRate);
-    List<State> inputLayer = new List<State>() { new State(), new State() };
-    List<State> outputLayer = new List<State>() { new State() };
+    Network* caseInst = new PosTron();
+    vector<vector<double>*>* cases = new vector<vector<double>*>();
+    if (flag)
+    {
+        cases->push_back(new vector<double>{ 0.0, 0.0, 0.0 });
+        cases->push_back(new vector<double>{ 0.0, 1.0, 0.0 });
+        cases->push_back(new vector<double>{ 1.0, 0.0, 0.0 });
+        cases->push_back(new vector<double>{ 1.0, 1.0, 1.0 });
 
-    foreach(var state in inputLayer)
-        this.ConnectStateToNode(state, mainNode);
-    foreach(var state in outputLayer)
-        this.ConnectNodeToState(mainNode, state);
-
-    hiddenLayer.AddNode(mainNode);
-
-    this.Layers.Add(hiddenLayer);
-    this.OutputLayer = outputLayer;
-    this.InputLayer = inputLayer;*/
+    }
+    else
+    {
+        cases->push_back(new vector<double>{ 0.0, 0.0, 0.0 });
+        cases->push_back(new vector<double>{ 0.0, 1.0, 1.0 });
+        cases->push_back(new vector<double>{ 1.0, 0.0, 1.0 });
+        cases->push_back(new vector<double>{ 1.0, 1.0, 1.0 });
+    }
+    caseInst->buildNetwork();
+    caseInst->trainNetwork(TRAIN_TIMES, cases);
+    for (int index = 0; index < cases->size(); index++)
+    {
+        double ans = caseInst->runNormal({cases->at(index)->at(0), cases->at(index)->at(1)}, true)[0];
+        string resultName = "[" + to_string(cases->at(index)->at(0)) + ", " + to_string(cases->at(index)->at(1)) + ", " + to_string(cases->at(index)->at(2)) + ", " + "]";
+        cout << resultName + " has the result of " + to_string(ans) << endl;
+    }
 }
 
-void trainNetwork(int iterations, vector<vector<double>> input)
+void runXorTron()
 {
-    /*while (iterations > 0)
+    Network* caseInst = new XorTron();
+    vector<vector<double>*>* cases = new vector<vector<double>*>();
+    cases->push_back(new vector<double>{ 0.0, 0.0, 0.0 });
+    cases->push_back(new vector<double>{ 0.0, 1.0, 1.0 });
+    cases->push_back(new vector<double>{ 1.0, 0.0, 1.0 });
+    cases->push_back(new vector<double>{ 1.0, 1.0, 0.0 });
+    caseInst->buildNetwork();
+    caseInst->trainNetwork(TRAIN_TIMES, cases);
+    for (int index = 0; index < cases->size(); index++)
     {
-        vector<vector<double>> inst = inputs[rand() % input.size() - 1];
-        this.RunForward(new List<double>{ inst[0], inst[1] });
-        this.RunBackward(new List<double>{ inst[2] });
-        iterations--;
-    }*/
+        double ans = caseInst->runNormal({ cases->at(index)->at(0), cases->at(index)->at(1) }, true)[0];
+        string resultName = "[" + to_string(cases->at(index)->at(0)) + ", " + to_string(cases->at(index)->at(1)) + ", " + to_string(cases->at(index)->at(2)) + ", " + "]";
+        cout << resultName + " has the result of " + to_string(ans) << endl;
+    }
 }
 
 int main()
 {
+    for (int index = 1; index <= 3; index++)
+    {
+        switch (index)
+        {
+        case 2:
+            cout << "AND Model" << endl;
+            runPostTron(true);
+            break;
+        case 3:
+            cout << "OR Model" << endl;
+            runPostTron(false);
+            break;
+        case 1:
+            cout << "XOR Model" << endl;
+            runXorTron();
+            break;
+        }
+        cout << endl;
+    }
     return 0;
 }

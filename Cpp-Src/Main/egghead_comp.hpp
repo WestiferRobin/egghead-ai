@@ -8,108 +8,70 @@ using namespace std;
 
 class Pipe
 {
-private:
-    double * forwardResult;
-    double * backwardResult;
 public:
+    double* forwardResult;
+    double* backwardResult;
     Pipe();
     ~Pipe();
-    double getForwardResult();
-    void setForwardResult(double);
-    double getBackwardResult();
-    void setBackwardResult(double);
 };
 
 class State
 {
-private:
-    double * stateValue;
-    Pipe * pipeLine;
 public:
+    double* stateValue;
+    Pipe* pipeLine;
     State();
     ~State();
-    double getStateValue();
-    Pipe getPipeline();
-    void loadValue(double);
-    void addPipeline(Pipe);
 };
 
 class Node
 {
-private:
-    string * nodeName;
-    int * activeFlag;
-    double * basis;
-    vector<double> * weights;
-    vector<Pipe> * frontPipes;
-    vector<Pipe> * backPipes;
-
+public:
     double calculateT();
     double active(double);
     double deriveActive(double);
-public:
+    string* nodeName;
+    int* activeFlag;
+    double* basis;
+    vector<double>* weights;
+    vector<Pipe*>* frontPipes;
+    vector<Pipe*>* backPipes;
     Node(int, int, string, bool);
     ~Node();
     void derive(double);
     void calculate();
-    void addFrontPipe(Pipe);
-    void addBackPipe(Pipe);
     string toString();
-    string getNodeName();
-    int getActiveFlag();
-    vector<double> getWeights();
-    void setWeights(vector<double>);
-    double getBasis();
-    void setBasis(double);
-    void setFrontPipes(vector<Pipe>);
-    vector<Pipe> getFrontPipes();
-    void setBackPipes(vector<Pipe>);
-    vector<Pipe> getBackPipes();
 };
 
 class Layer
 {
-private:
-    double * learningRate;
-    string * layerName;
-    vector<Node> * layerNodes;
 public:
+    double* learningRate;
+    string* layerName;
+    vector<Node*>* layerNodes;
     Layer(double, string);
     ~Layer();
     void forward(void);
     void backward(void);
-    void addNode(Node);
     string toString();
-    double getLearningRate();
-    string getLayerName();
-    vector<Node> getLayerNodes();
 };
 
 class Network
 {
-private:
-    double * learningRate;
-    vector<Layer> * layers;
-    vector<State> * inputLayer;
-    vector<State> * outputLayer;
+public:
     void forward(vector<double>);
     void backward(vector<double>);
-protected:
-    double getLearningRate();
-    vector<Layer> getLayers();
-    void setLayers(vector<Layer>);
-    vector<State> getInputLayer();
-    void setInputLayer(vector<State>);
-    vector<State> getOutputLayer();
-    void setOutputLayer(vector<State>);
-public:
-    Network(double, vector<Layer>);
+    double* learningRate;
+    vector<Layer*>* layers;
+    vector<State*>* inputLayer;
+    vector<State*>* outputLayer;
+    Network(double);
     ~Network();
     virtual void buildNetwork();
-    virtual void trainNetwork(int, vector<vector<double>>);
-    void connectPipeline(Node, Node);
-    void connectStateToNode(State, Node targetNode);
-    void connectNodeToState(Node sourceNode, State);
+    virtual void trainNetwork(int, vector<vector<double>*>*);
+    void connectPipeline(Node*, Node*);
+    void connectStateToNode(State*, Node*);
+    void connectNodeToState(Node*, State*);
     vector<double> runNormal(vector<double>, bool);
     void runForward(vector<double>);
     void runBackward(vector<double>);
