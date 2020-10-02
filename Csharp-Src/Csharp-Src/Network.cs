@@ -30,22 +30,22 @@ namespace Csharp_Src
 
         public void ConnectPipeline(Node sourceNode, Node targetNode)
         {
-            Pipe pipeLine = new Pipe();
-            sourceNode.AddFrontPipe(pipeLine);
-            targetNode.AddBackPipe(pipeLine);
+            Pipe pipeline = new Pipe();
+            sourceNode.FrontPipes.Add(pipeline);
+            targetNode.BackPipes.Add(pipeline);
         }
 
         public void ConnectStateToNode(State sourceState, Node targetNode)
         {
             if (sourceState.Pipeline == null)
             {
-                Pipe pipeLine = new Pipe();
-                sourceState.AddPipeline(pipeLine);
-                targetNode.AddBackPipe(pipeLine);
+                Pipe pipeline = new Pipe();
+                sourceState.Pipeline = pipeline;
+                targetNode.BackPipes.Add(pipeline);
             }
             else
             {
-                targetNode.AddBackPipe(sourceState.Pipeline);
+                targetNode.BackPipes.Add(sourceState.Pipeline);
             }
         }
 
@@ -53,13 +53,13 @@ namespace Csharp_Src
         {
             if (targetState.Pipeline == null)
             {
-                Pipe pipeLine = new Pipe();
-                sourceNode.AddFrontPipe(pipeLine);
-                targetState.AddPipeline(pipeLine);
+                Pipe pipeline = new Pipe();
+                sourceNode.FrontPipes.Add(pipeline);
+                targetState.Pipeline = pipeline;
             }
             else
             {
-                sourceNode.AddFrontPipe(targetState.Pipeline);
+                sourceNode.FrontPipes.Add(targetState.Pipeline);
             }
         }
 
@@ -71,13 +71,9 @@ namespace Csharp_Src
             foreach (var outputState in this.OutputLayer)
             {
                 if (returnRaw)
-                {
                     ans.Add(outputState.StateValue);
-                }
                 else
-                {
                     ans.Add(0.5 <= outputState.StateValue ? 1 : 0);
-                }
             }
 
             return ans;
@@ -94,13 +90,13 @@ namespace Csharp_Src
                 throw new Exception("Inputs don\'t aline with input states. Please check again.");
 
             for (int index = 0; index < inputs.Count; index++)
-                this.InputLayer[index].LoadValue(inputs[index]);
+                this.InputLayer[index].StateValue = inputs[index];
             foreach (var inputState in this.InputLayer)
                 inputState.Pipeline.ForwardResult = inputState.StateValue;
             foreach (var layer in this.Layers)
                 layer.Forward();
             foreach (var outputState in this.OutputLayer)
-                outputState.LoadValue(outputState.Pipeline.ForwardResult);
+                outputState.StateValue = outputState.Pipeline.ForwardResult;
         }
 
         public void RunBackward(List<double> expected)
@@ -114,14 +110,14 @@ namespace Csharp_Src
                 throw new Exception("Expected and actual length isn\'t valid.");
             
             double constant = 1.0 / expected.Count;
+            
             for (int index = 0; index < expected.Count; index++)
                 this.OutputLayer[index].Pipeline.BackwardResult = (-1.0 * constant * (expected[index] - this.OutputLayer[index].StateValue));
             
             int indexLayer = this.Layers.Count - 1;
+
             while (indexLayer >= 0)
-            {
                 this.Layers[indexLayer--].Backward();
-            }
         }
     }
 }

@@ -11,15 +11,5 @@
             this.StateValue = 0.0;
             this.Pipeline = null;
         }
-
-        public void LoadValue(double stateValue)
-        {
-            this.StateValue = stateValue;
-        }
-
-        public void AddPipeline(Pipe pipeline)
-        {
-            this.Pipeline = pipeline;
-        }
     }
 }

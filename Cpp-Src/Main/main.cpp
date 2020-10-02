@@ -1,5 +1,4 @@
 #include <iostream>
-//#include "egghead_comp.hpp"
 #include "test_case.hpp"
 
 using namespace std;
@@ -8,7 +7,7 @@ const int TRAIN_TIMES = 1000000;
 
 void runPostTron(bool flag)
 {
-    Network* caseInst = new PosTron();
+    Network* caseInst = new NodeTronModel();
     vector<vector<double>*>* cases = new vector<vector<double>*>();
     if (flag)
     {
@@ -37,7 +36,7 @@ void runPostTron(bool flag)
 
 void runXorTron()
 {
-    Network* caseInst = new XorTron();
+    Network* caseInst = new XorModel();
     vector<vector<double>*>* cases = new vector<vector<double>*>();
     cases->push_back(new vector<double>{ 0.0, 0.0, 0.0 });
     cases->push_back(new vector<double>{ 0.0, 1.0, 1.0 });
@@ -59,18 +58,18 @@ int main()
     {
         switch (index)
         {
-        case 2:
-            cout << "AND Model" << endl;
-            runPostTron(true);
-            break;
-        case 3:
-            cout << "OR Model" << endl;
-            runPostTron(false);
-            break;
-        case 1:
-            cout << "XOR Model" << endl;
-            runXorTron();
-            break;
+            case 1:
+                cout << "Xor Model" << endl;
+                runXorTron();
+                break;
+            case 2:
+                cout << "Node Tron Model: And" << endl;
+                runPostTron(true);
+                break;
+            case 3:
+                cout << "Node Tron Model: Or" << endl;
+                runPostTron(false);
+                break;
         }
         cout << endl;
     }

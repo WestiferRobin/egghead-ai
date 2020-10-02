@@ -4,36 +4,11 @@ public class NodeTronModel extends Network
 {
     public ArrayList<ArrayList<Double>> nodeCases = new ArrayList<ArrayList<Double>>();
 
-    public NodeTronModel(double learningRate, ArrayList<Layer> layers, boolean isAnd)
+    public NodeTronModel(double learningRate, ArrayList<Layer> layers)
     {
         super(learningRate, layers);
-
-        if (isAnd)
-        {
-            initAndCases();
-        }
-        else
-        {
-            initOrCases();
-        }
     }
-
-    private void initAndCases()
-    {
-        nodeCases.add(new ArrayList<Double>(Arrays.asList(1.0, 1.0, 1.0)));
-        nodeCases.add(new ArrayList<Double>(Arrays.asList(0.0, 1.0, 0.0)));
-        nodeCases.add(new ArrayList<Double>(Arrays.asList(1.0, 0.0, 0.0)));
-        nodeCases.add(new ArrayList<Double>(Arrays.asList(0.0, 0.0, 0.0)));
-    }
-
-    private void initOrCases()
-    {
-        nodeCases.add(new ArrayList<Double>(Arrays.asList(1.0, 1.0, 1.0)));
-        nodeCases.add(new ArrayList<Double>(Arrays.asList(0.0, 1.0, 1.0)));
-        nodeCases.add(new ArrayList<Double>(Arrays.asList(1.0, 0.0, 1.0)));
-        nodeCases.add(new ArrayList<Double>(Arrays.asList(0.0, 0.0, 0.0)));
-    }
-
+    
     @Override
     public void buildNetwork()
     {

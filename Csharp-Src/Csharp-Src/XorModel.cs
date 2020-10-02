@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Csharp_Src
 {
-    public class XOR : Network
+    public class XorModel : Network
     {
         public List<List<double>> XorCases { get; set; }
 
-        public XOR() : base()
+        public XorModel() : base()
         {
             this.XorCases = new List<List<double>>()
             {
@@ -26,11 +26,11 @@ namespace Csharp_Src
             this.OutputLayer = new List<State>() { new State() };
 
             Layer hiddenLayer1 = new Layer(this.LearningRate, "layer1");
-            hiddenLayer1.AddNode(new Node(2, 1, "n11"));
-            hiddenLayer1.AddNode(new Node(2, 1, "n12"));
+            hiddenLayer1.LayerNodes.Add(new Node(2, 1, "n11"));
+            hiddenLayer1.LayerNodes.Add(new Node(2, 1, "n12"));
 
             Layer hiddenLayer2 = new Layer(this.LearningRate, "layer2");
-            hiddenLayer2.AddNode(new Node(2, 1, "n12"));
+            hiddenLayer2.LayerNodes.Add(new Node(2, 1, "n21"));
 
             foreach (var state in this.InputLayer)
             {

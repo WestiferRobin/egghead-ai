@@ -58,6 +58,8 @@ public:
 
     void setNodeName(string value) { *this->nodeName = value; }
     string* getNodeName() { return this->nodeName; }
+    void setActiveFlag(int value) { *this->activeFlag = value; }
+    int* getActiveFlag() { return this->activeFlag; }
     void setBasis(double basis) { *this->basis = basis; }
     double* getBasis() { return this->basis; }
     void setWeights(vector<double>* value) { this->weights = value; }

@@ -7,14 +7,13 @@
 
 using namespace std;
 
-class PosTron : public Network
+class NodeTronModel : public Network
 {
 public:
-	PosTron() : Network(0.01)
-	{
-		
+	NodeTronModel() : Network(0.01)
+	{	
 	}
-	~PosTron() {}
+	~NodeTronModel() {}
 	void buildNetwork()
 	{
 		Node* mainNode = new Node(2, 1, "mainNode", true);
@@ -47,11 +46,11 @@ public:
 	}
 };
 
-class XorTron : public Network
+class XorModel : public Network
 {
 public:
-	XorTron() : Network(0.1) {}
-	~XorTron() {}
+	XorModel() : Network(0.1) {}
+	~XorModel() {}
 	void buildNetwork()
 	{
 		this->setInputLayer(new vector<State*>{ new State(), new State() });

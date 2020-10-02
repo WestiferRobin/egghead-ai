@@ -12,55 +12,33 @@ namespace Csharp_Src
         public List<Pipe> FrontPipes { get; set; }
         public List<Pipe> BackPipes { get; set; }
 
-        public Node(int size, int active_flag=1, string name="", bool isRandom = true)
+        public Node(int size, int activeFlag=1, string name="", bool isRandom = true)
         {
             Random rand = new Random();
+
             this.NodeName = name;
-            this.ActiveFlag = active_flag;
+            this.ActiveFlag = activeFlag;
             this.Weights = new List<double>();
+
             this.Basis = isRandom ? rand.NextDouble() : 0.5;
+
             for (int i = 0; i < size; i++)
                 this.Weights.Add(isRandom ? rand.NextDouble() : 0.5);
+
             this.FrontPipes = new List<Pipe>();
             this.BackPipes = new List<Pipe>();
-        }
-
-        public void Derive(double learningRate)
-        {
-            double tValue = this.CalculateT();
-            double outterDer = this.DeriveActive(tValue);
-            double paramDer = 0.0;
-
-            foreach (var pipe in this.FrontPipes)
-                paramDer += pipe.BackwardResult;
-
-            outterDer *= paramDer;
-
-            for (int index = 0; index < this.Weights.Count; index++)
-            {
-                double innerDer = this.BackPipes[index].ForwardResult;
-                this.Weights[index] -= (double)(learningRate * outterDer * innerDer);
-                this.BackPipes[index].BackwardResult = outterDer * this.Weights[index];
-            }
-            this.Basis -= learningRate * outterDer;
-        }
-
-        public void Calculate()
-        {
-            double tValue = this.CalculateT();
-            foreach (var pip in this.FrontPipes)
-                pip.ForwardResult = this.Active(tValue);
         }
 
         private double CalculateT()
         {
             double ans = this.Basis;
+
             if (this.BackPipes.Count != this.Weights.Count)
                 throw new Exception("This node is not working due to pipe and or weight configuration");
+            
             for (int index = 0; index < this.Weights.Count; index++)
-            {
                 ans += this.BackPipes[index].ForwardResult * this.Weights[index];
-            }
+            
             return ans;
         }
 
@@ -87,15 +65,35 @@ namespace Csharp_Src
             }
         }
 
-        public void AddFrontPipe(Pipe pipe)
+        public void Derive(double learningRate)
         {
-            this.FrontPipes.Add(pipe);
+            double tValue = this.CalculateT();
+            double outterDer = this.DeriveActive(tValue);
+            double paramDer = 0.0;
+
+            foreach (var pipe in this.FrontPipes)
+                paramDer += pipe.BackwardResult;
+
+            outterDer *= paramDer;
+
+            for (int index = 0; index < this.Weights.Count; index++)
+            {
+                double innerDer = this.BackPipes[index].ForwardResult;
+                this.Weights[index] -= (double)(learningRate * outterDer * innerDer);
+                this.BackPipes[index].BackwardResult = outterDer * this.Weights[index];
+            }
+
+            this.Basis -= learningRate * outterDer;
         }
 
-        public void AddBackPipe(Pipe pipe)
+        public void Calculate()
         {
-            this.BackPipes.Add(pipe);
+            double tValue = this.CalculateT();
+            
+            foreach (var pip in this.FrontPipes)
+                pip.ForwardResult = this.Active(tValue);
         }
+
 
         public override string ToString()
         {

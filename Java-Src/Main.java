@@ -2,32 +2,59 @@ import java.util.*;
 
 public class Main
 {
+    private static ArrayList<ArrayList<Double>> cases;
+    private final int TRAIN_TIMES = 1000000;
+
     public static void main(String[] args) 
     {
-        runXorModel();
-        runNodeModel(true);
-        runNodeModel(false);
-    }
-
-    private static void runNodeModel(boolean flag) 
-    {
-        NodeTronModel model = new NodeTronModel(0.01, null, flag);
-        ArrayList<ArrayList<Double>> cases = model.nodeCases;
-        model.buildNetwork();
-        model.trainNetwork(10000000, cases);
-        for (ArrayList<Double> inst : cases)
+        for (int flag = 1; flag <= 3; flag++)
         {
-            ArrayList<Double> inputs = new ArrayList<Double>();
-            inputs.add(inst.get(0));
-            inputs.add(inst.get(1));
-            double result = model.runNormal(inputs, true).get(0);
-            String example = inst.get(0) + " " + inst.get(1) + " " + inst.get(2);
-            System.out.println(example + " result is " + result);
+            switch (flag)
+            {
+                case 1:
+                    System.out.println("Xor Model");
+                    runXor();
+                    break;
+                case 2:
+                    System.out.println("Node Tron Model: And");
+                    runNodeTron(true);
+                    break;
+                case 3:
+                    System.out.println("Node Tron Model: Or");
+                    runNodeTron(false);
+                    break;
+            }
+            System.out.println();
         }
-        System.out.println();
     }
 
-    private static void runXorModel() 
+    private static void runNodeTron(boolean isAnd) 
+    {
+        Network caseExample = new NodeTronModel();
+        cases = isAnd ? new ArrayList<ArrayList<Double>>()
+        {
+            new ArrayList<Double>() {1.0, 1.0, 1.0},
+            new ArrayList<Double>() {1.0, 0.0, 0.0},
+            new ArrayList<Double>() {0.0, 1.0, 0.0},
+            new ArrayList<Double>() {0.0, 0.0, 0.0},
+        } : 
+        new ArrayList<ArrayList<Double>>()
+        {
+            new ArrayList<Double>() {1.0, 1.0, 1.0},
+            new ArrayList<Double>() {0.0, 1.0, 1.0},
+            new ArrayList<Double>() {0.0, 0.0, 0.0},
+            new ArrayList<Double>() {1.0, 0.0, 1.0},
+        };
+        caseExample.BuildNetwork();
+        caseExample.TrainNetwork(TRAIN_TIMES, Cases);
+        foreach (var datCase in Cases)
+        {
+            var ans = caseExample.RunNormal(new ArrayList<Double>() { datCase[0], datCase[1] }, true)[0];
+            Console.WriteLine($"{string.Join(",", datCase)} result is {ans}");
+        }
+    }
+
+    private static void runXor() 
     {
         XorModel model = new XorModel(0.01, null);
         ArrayList<ArrayList<Double>> cases = model.xorCases;

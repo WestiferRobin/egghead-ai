@@ -3,26 +3,10 @@ using System.Collections.Generic;
 
 namespace Csharp_Src
 {
-    public class NodeTron : Network
+    public class NodeTronModel : Network
     {
-        public List<List<double>> AndCases { get; }
-        public List<List<double>> OrCases { get; }
-        public NodeTron() : base()
+        public NodeTronModel() : base()
         {
-            this.AndCases = new List<List<double>>()
-            {
-                new List<double>() {1.0, 1.0, 1.0},
-                new List<double>() {1.0, 0.0, 0.0},
-                new List<double>() {0.0, 1.0, 0.0},
-                new List<double>() {0.0, 0.0, 0.0},
-            };
-            this.OrCases = new List<List<double>>()
-            {
-                new List<double>() {1.0, 1.0, 1.0},
-                new List<double>() {0.0, 1.0, 1.0},
-                new List<double>() {0.0, 0.0, 0.0},
-                new List<double>() {1.0, 0.0, 1.0},
-            };
         }
 
         public override void BuildNetwork()
@@ -37,7 +21,7 @@ namespace Csharp_Src
             foreach (var state in outputLayer)
                 this.ConnectNodeToState(mainNode, state);
 
-            hiddenLayer.AddNode(mainNode);
+            hiddenLayer.LayerNodes.Add(mainNode);
 
             this.Layers.Add(hiddenLayer);
             this.OutputLayer = outputLayer;
