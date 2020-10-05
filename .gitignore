@@ -1,3 +1,5 @@
+./.vscode/*
+
 # for Cpp-Src
 ./Cpp-Src/Main/*.o
 ./Cpp-Src/Main/a.out
