@@ -12,12 +12,15 @@ public class Node
     public Node(int size, int activeFlag, String name, boolean isRandom)
     {
         Random rand = new Random();
+
         this._nodeName = name;
         this._activeFlag = activeFlag;
         this._weights = new ArrayList<Double>();
         this._basis = isRandom ? rand.nextDouble() : 0.5;
+
         for (int i = 0; i < size; i++)
             this._weights.add(isRandom ? rand.nextDouble() : 0.5);
+
         this._frontPipes = new ArrayList<Pipe>();
         this._backPipes = new ArrayList<Pipe>();
     }
@@ -97,6 +100,7 @@ public class Node
     public void calculate()
     {
         double tValue = this.calculateT();
+
         for (Pipe pipe : this.getFrontPipes())
             pipe.setForwardResult(this.active(tValue));
     }
@@ -104,10 +108,12 @@ public class Node
     private double calculateT()
     {
         double ans = this.getBasis();
+
         for (int index = 0; index < this.getWeights().size(); index++)
         {
             ans += this.getBackPipes().get(index).getForwardResult() * this.getWeights().get(index);
         }
+
         return ans;
     }
 
@@ -132,16 +138,6 @@ public class Node
             default:
                 return 0.0;
         }
-    }
-
-    public void addFrontPipe(Pipe pipe)
-    {
-        this.getFrontPipes().add(pipe);
-    }
-
-    public void addBackPipe(Pipe pipe)
-    {
-        this.getBackPipes().add(pipe);
     }
 
     public String toString()

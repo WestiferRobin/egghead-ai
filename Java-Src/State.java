@@ -19,12 +19,12 @@ public class State
         return _pipeLine;
     }
 
-    public void loadValue(double stateValue)
+    public void setStateValue(double stateValue)
     {
         this._stateValue = stateValue;
     }
 
-    public void addPipeline(Pipe pipeline)
+    public void setPipeline(Pipe pipeline)
     {
         this._pipeLine = pipeline;
     }

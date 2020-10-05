@@ -2,31 +2,23 @@ import java.util.*;
 
 public class XorModel extends Network
 {
-    public static ArrayList<ArrayList<Double>> xorCases = new ArrayList<ArrayList<Double>>();
-
     public XorModel(double learningRate, ArrayList<Layer> layers)
     {
         super(learningRate, layers);
-        initCases();
-    }
-
-    private void initCases()
-    {
-        xorCases.add(new ArrayList<Double>(Arrays.asList(1.0, 1.0, 0.0)));
-        xorCases.add(new ArrayList<Double>(Arrays.asList(0.0, 1.0, 1.0)));
-        xorCases.add(new ArrayList<Double>(Arrays.asList(1.0, 0.0, 1.0)));
-        xorCases.add(new ArrayList<Double>(Arrays.asList(0.0, 0.0, 0.0)));
     }
 
     @Override
     public void buildNetwork()
     {
         System.out.println("Starting to build XOR Model");
+
         ArrayList<State> inputLayer = new ArrayList<State>();
         inputLayer.add(new State());
         inputLayer.add(new State());
+
         ArrayList<State> outputLayer = new ArrayList<State>();
         outputLayer.add(new State());
+        
         this.setInputLayer(inputLayer);
         this.setOutputLayer(outputLayer);
 
@@ -68,6 +60,7 @@ public class XorModel extends Network
         while (iterations > 0)
         {
             ArrayList<Double> inst = cases.get(rand.nextInt(cases.size()));
+
             ArrayList<Double> forwardList = new ArrayList<Double>();
             forwardList.add(inst.get(0));
             forwardList.add(inst.get(1));
@@ -77,6 +70,7 @@ public class XorModel extends Network
 
             this.runForward(forwardList);
             this.runBackward(backwardList);
+            
             iterations--;
         }
     }

@@ -46,7 +46,7 @@ class Network:
     def add_layer(self, layer):
         self.layers.append(layer)
 
-    def run_normal(self, inputs, return_raw=False):
+    def run_normal(self, inputs, return_raw=True):
         self.__forward(inputs)
         ans = []
         for output_state in self.output_layer:

@@ -6,20 +6,6 @@ from pipe import Pipe
 from math import exp, pow
 import random
 
-and_cases = [
-    [1.0, 1.0, 1.0],
-    [0.0, 0.0, 0.0],
-    [1.0, 0.0, 0.0],
-    [0.0, 1.0, 0.0]
-]
-
-or_cases = [
-    [1.0, 1.0, 1.0],
-    [0.0, 0.0, 0.0],
-    [1.0, 0.0, 1.0],
-    [0.0, 1.0, 1.0]
-]
-
 class NodeTron(Network):
 
     def __init__(self):
@@ -44,21 +30,8 @@ class NodeTron(Network):
 
 
     def train_network(self, iterations=0, cases=[]):
-        print(str(len(cases)))
         while iterations > 0:
             inst = cases[random.randint(0, len(cases) - 1)]
             self.run_forward([inst[0], inst[1]])
             self.run_backward([inst[2]])
             iterations -= 1
-
-
-if __name__ == "__main__":
-    mr_cases = [and_cases, or_cases]
-    for dat_case in mr_cases:
-        targ_cases = dat_case
-        the_network = NodeTron()
-        the_network.build_network()
-        the_network.train_network(1000000, targ_cases)
-        for case in targ_cases:
-            ans = the_network.run_normal([case[0], case[1]], return_raw=True)[0]
-            print(str(case) + ": " + str(ans))

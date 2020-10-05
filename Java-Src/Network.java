@@ -62,22 +62,22 @@ public class Network
 
     public void connectPipeline(Node sourceNode, Node targetNode)
     {
-        Pipe pipeLine = new Pipe();
-        sourceNode.addFrontPipe(pipeLine);
-        targetNode.addBackPipe(pipeLine);
+        Pipe pipeline = new Pipe();
+        sourceNode.getFrontPipes().add(pipeline);
+        targetNode.getBackPipes().add(pipeline);
     }
 
     public void connectStateToNode(State sourceState, Node targetNode)
     {
         if (sourceState.getPipeline() == null)
         {
-            Pipe pipeLine = new Pipe();
-            sourceState.addPipeline(pipeLine);
-            targetNode.addBackPipe(pipeLine);
+            Pipe pipeline = new Pipe();
+            sourceState.setPipeline(pipeline);
+            targetNode.getBackPipes().add(pipeline);
         }
         else
         {
-            targetNode.addBackPipe(sourceState.getPipeline());
+            targetNode.getBackPipes().add(sourceState.getPipeline());
         }
     }
 
@@ -85,13 +85,13 @@ public class Network
     {
         if (targetState.getPipeline() == null)
         {
-            Pipe pipeLine = new Pipe();
-            sourceNode.addFrontPipe(pipeLine);
-            targetState.addPipeline(pipeLine);
+            Pipe pipeline = new Pipe();
+            sourceNode.getFrontPipes().add(pipeline);
+            targetState.setPipeline(pipeline);
         }
         else
         {
-            sourceNode.addFrontPipe(targetState.getPipeline());
+            sourceNode.getFrontPipes().add(targetState.getPipeline());
         }
     }
 
@@ -123,13 +123,13 @@ public class Network
     private void forward(ArrayList<Double> inputs)
     {
         for (int index = 0; index < inputs.size(); index++)
-            this.getInputLayer().get(index).loadValue(inputs.get(index));
+            this.getInputLayer().get(index).setStateValue(inputs.get(index));
         for (State inputState : this.getInputLayer())
             inputState.getPipeline().setForwardResult(inputState.getStateValue());
         for (Layer layer : this.getLayers())
             layer.forward();
         for (State outputState : this.getOutputLayer())
-            outputState.loadValue(outputState.getPipeline().getForwardResult());
+            outputState.setStateValue(outputState.getPipeline().getForwardResult());
     }
 
     public void runBackward(ArrayList<Double> expected)

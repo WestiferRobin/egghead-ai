@@ -6,13 +6,6 @@ from pipe import Pipe
 from math import exp, pow
 import random
 
-xor_cases = [
-    [1.0, 1.0, 0.0],
-    [0.0, 1.0, 1.0],
-    [0.0, 0.0, 0.0],
-    [1.0, 0.0, 1.0]
-]
-
 class XorTron(Network):
     
     def __init__(self):
@@ -60,11 +53,3 @@ class XorTron(Network):
             self.run_forward([inst[0], inst[1]])
             self.run_backward([inst[2]])
             iterations -= 1
-
-if __name__ == "__main__":
-    the_network = XorTron()
-    the_network.build_network()
-    the_network.train_network(1000000, xor_cases)
-    for case in xor_cases:
-        ans = the_network.run_normal([case[0], case[1]], return_raw=True)
-        print(str(case) + ": " + str(ans))

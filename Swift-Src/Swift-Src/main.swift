@@ -10,6 +10,7 @@ import Foundation
 
 func xorRun()
 {
+    print("Xor Model")
     let caseExample:Xor = Xor();
     let cases = caseExample.xorCases;
     caseExample.buildNetwork();
@@ -19,10 +20,12 @@ func xorRun()
         let ans:Double = caseExample.runNormal(newInputs: [inst[0], inst[1]], returnRaw: true)[0];
         print(String("[\(inst[0]), \(inst[1]), \(inst[2])]") + " Result is " + String(ans));
     }
+    print()
 }
 
 func andRun()
 {
+    print("Node Tron Model: And")
     let caseExample:NodeTron = NodeTron(isAndFlag: true);
     let cases = caseExample.theCases;
     caseExample.buildNetwork();
@@ -32,10 +35,12 @@ func andRun()
         let ans:Double = caseExample.runNormal(newInputs: [inst[0], inst[1]], returnRaw: true)[0];
         print(String("[\(inst[0]), \(inst[1]), \(inst[2])]") + " Result is " + String(ans));
     }
+    print()
 }
 
 func orRun()
 {
+    print("Node Tron Model: Or")
     let caseExample:NodeTron = NodeTron(isAndFlag: false);
     let cases = caseExample.theCases;
     caseExample.buildNetwork();
@@ -45,6 +50,7 @@ func orRun()
         let ans:Double = caseExample.runNormal(newInputs: [inst[0], inst[1]], returnRaw: true)[0];
         print(String("[\(inst[0]), \(inst[1]), \(inst[2])]") + " Result is " + String(ans));
     }
+    print()
 }
 
 xorRun();
