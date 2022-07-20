@@ -1,3 +1,6 @@
+# Dev Notes
+- Looking at getting this done as unit tests in C# or Java
+
 # Egghead AI Framework
 
 Egghead AI Framework is a Neural Network builder for OOP languages.
